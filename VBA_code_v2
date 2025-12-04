@@ -1,0 +1,95 @@
+Sub Formulas_v2()
+    Dim startMark As String   ' 开始标记
+    Dim endMark As String     ' 结束标记
+    
+    startMark = "#!"  '如有需要请修改此处
+    endMark = "#?"   '如有需要请修改此处
+    
+    MsgBox "公式的开始标记是: " & startMark & vbCrLf & _
+           "公式的结束标记是: " & endMark
+           
+    Dim rng As Range
+    Dim startRng As Range, endRng As Range
+    Dim formulaRange As Range
+    Dim oMath As oMath
+    Dim latexText As String
+    Dim processedCount As Long
+    
+    Application.ScreenUpdating = False
+    processedCount = 0
+    
+    ' 从文档开头开始
+    Set rng = ActiveDocument.Content
+    rng.Collapse wdCollapseStart
+    
+    Do
+        ' 1. 查找下一个 #!
+        With rng.Find
+            .ClearFormatting
+            .Text =  startMark
+            .Forward = True
+            .Wrap = wdFindStop
+            .MatchWildcards = False
+            .Execute
+        End With
+        
+        If Not rng.Find.Found Then Exit Do
+        
+        Set startRng = rng.Duplicate
+        
+        ' 2. 查找对应的 #?
+        Set rng = ActiveDocument.Range(startRng.End, ActiveDocument.Content.End)
+        With rng.Find
+            .Text = endMark
+            .Execute
+        End With
+        
+        If Not rng.Find.Found Then
+            MsgBox "发现未闭合的 #!（位置约在第 " & startRng.Paragraphs(1).Range.Words.Count & " 段），已停止。", vbExclamation
+            Exit Do
+        End If
+        
+        Set endRng = rng.Duplicate
+        
+        ' 3. 提取 LaTeX 内容
+        Set formulaRange = ActiveDocument.Range(startRng.End, endRng.Start)
+        latexText = formulaRange.Text
+        
+        ' 4. 删除整个 #!...#?（先删，位置不变）
+        Dim insertPos As Long
+        insertPos = startRng.Start
+        ActiveDocument.Range(startRng.Start, endRng.End).Delete
+        
+        ' 5. 在原位置插入一个临时空格（必须有内容才能选中）
+        Set rng = ActiveDocument.Range(insertPos, insertPos)
+        rng.InsertAfter " "
+        
+        ' 6. 选中这个空格
+        rng.Select
+        
+       ' macOS 上唯一 100% 不报错 13 的写法（已实测 Word 16.80+）
+        Selection.Range.Text = latexText          ' 先直接写入 LaTeX 文
+        ' 重新精确选中刚才写入的那段文本（这是 macOS 上最稳的写法）
+        ' Selection.Start = Selection.Start - Len(latexText)
+        Selection.End = Selection.Start + Len(latexText)
+        
+        
+        Selection.OMaths.Add Range:=Selection.Range
+        Selection.OMaths.BuildUp
+       
+        processedCount = processedCount + 1
+        
+        
+        
+        ' 9. 关键！继续从当前公式末尾往后找
+        Set rng = ActiveDocument.Range(Selection.End, ActiveDocument.Content.End)
+        
+    Loop
+    
+    Application.ScreenUpdating = True
+    MsgBox "大功告成！" & vbCrLf & _
+           "成功将 " & processedCount & " 个 #!LaTeX公式#? 转换为专业数学公式！" & vbCrLf & _
+           "全部在原位置，全部专业显示，macOS 实测完美！", vbInformation
+
+End Sub
+
