@@ -25,4 +25,7 @@
 startMark = "#!"  '如有需要请修改此处
 endMark = "#?"   '如有需要请修改此处
 
+测试文件见压缩包v2_release\v2_github\测试文件_v2.docx
+
 图片见压缩包：v2_release\v2_github\README
+
