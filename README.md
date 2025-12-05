@@ -1,12 +1,13 @@
 开发者：Grok & Qiaoqinggeng
 
-测试文件见压缩包v2_release\v2_github\测试文档_v2.docx
+测试文件见压缩包：v2_release\v2_github\测试文档_v2.docx
 
 图片见压缩包：v2_release\v2_github\README
 
 该宏代码已在office for mac 2024，windows Microsoft Word 中测试。
 
 ***注意：请务必将word的公式编码调为Latex(图1) (也请检查AI生成是否生成Latex格式的公式）
+
 
 对公式文本的准备：
 要求AI将所有Latex源码，用’#!’字符、’#?’字符夹在中间
