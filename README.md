@@ -1,7 +1,7 @@
 开发者：Grok & Qiaoqinggeng
+该宏代码已在office for mac 2024，windows Microsoft Word 中测试。
 
-注意：v2版本的宏代码只在macOS系统中测试过，windows系统兼容性未知（大概率兼容）
-***请务必将word的公式编码调为Latex(图1) (也请检查AI生成是否生成Latex格式的公式）
+***注意：请务必将word的公式编码调为Latex(图1) (也请检查AI生成是否生成Latex格式的公式）
 
 对公式文本的准备：
 要求AI将所有Latex源码，用’#!’字符、’#?’字符夹在中间
