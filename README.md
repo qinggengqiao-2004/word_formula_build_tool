@@ -1,4 +1,5 @@
 开发者：Grok & Qiaoqinggeng
+
 该宏代码已在office for mac 2024，windows Microsoft Word 中测试。
 
 ***注意：请务必将word的公式编码调为Latex(图1) (也请检查AI生成是否生成Latex格式的公式）
