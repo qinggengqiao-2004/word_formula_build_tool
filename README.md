@@ -1,6 +1,6 @@
 开发者：Grok & Qiaoqinggeng
 
-宏代码见文件BA_code_v2，已在office for mac 2024，windows Microsoft Word 中测试。
+宏代码见文件VBA_code_v2，已在office for mac 2024，windows Microsoft Word 中测试。
 
 测试文件见压缩包：v2_release\v2_github\测试文档_v2.docx
 
